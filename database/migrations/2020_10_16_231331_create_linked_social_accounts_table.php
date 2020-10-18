@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Post extends Migration
+class CreateLinkedSocialAccountsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class Post extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->string('description');
+        Schema::create('linked_social_accounts', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('provider_id');
+            $table->string('provider_name');
             $table->bigInteger('user_id')->unsigned();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
@@ -30,6 +30,6 @@ class Post extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('linked_social_accounts');
     }
 }

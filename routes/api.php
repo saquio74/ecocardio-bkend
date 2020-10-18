@@ -3,8 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\pacientes;
-use App\Http\Controllers\post; 
+use App\Http\Controllers\pacientesController;
+use App\Http\Controllers\postController; 
 
 
 /*
@@ -20,16 +20,17 @@ use App\Http\Controllers\post;
 
 Route::middleware('auth:api')->get('user',              [AuthController::class,'user']);
 Route::middleware('auth:api')->post('logout',           [AuthController::class,'logout']);
-Route::middleware('auth:api')->get('pacientes',         [pacientes::class,'index']);
-Route::middleware('auth:api')->post('pacientesCreate',  [pacientes::class,'store']);
-Route::middleware('auth:api')->get('pacientesShow',     [pacientes::class,'show']);
-Route::middleware('auth:api')->put('pacientesUpdate',   [pacientes::class,'update']);
-Route::middleware('auth:api')->get('pacientesDelete',   [pacientes::class,'destroy']);
-Route::middleware('auth:api')->post('post',             [post::class,'index']);
-Route::middleware('auth:api')->get('postCreate',        [post::class,'store']);
-Route::middleware('auth:api')->get('postShow',          [post::class,'show']);
-Route::middleware('auth:api')->put('postUpdate',        [post::class,'update']);
-Route::middleware('auth:api')->get('postDelete',        [post::class,'destroy']);
+Route::middleware('auth:api')->get('pacientes',         [pacientesController::class,'index']);
+Route::middleware('auth:api')->post('pacientesCreate',  [pacientesController::class,'store']);
+Route::middleware('auth:api')->get('pacientesShow',     [pacientesController::class,'show']);
+Route::middleware('auth:api')->put('pacientesUpdate',   [pacientesController::class,'update']);
+Route::middleware('auth:api')->delete('pacientesDelete',[pacientesController::class,'destroy']);
+Route::get('post',                                      [postController::class,'index']);
+Route::middleware('auth:api')->post('postCreate',       [postController::class,'store']);
+Route::get('postShow/{id}',                             [postController::class,'show']);
+Route::middleware('auth:api')->put('postUpdate',        [postController::class,'update']);
+Route::middleware('auth:api')->delete('postDelete',     [postController::class,'destroy']);
+
 
 
 
