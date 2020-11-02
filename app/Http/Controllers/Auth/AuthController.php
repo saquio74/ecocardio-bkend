@@ -14,20 +14,25 @@ class AuthController extends Controller
 {
     public function signup(Request $request)
     {
-        $request->validate([
-            'name'      => 'required|string',
-            'email'     => 'required|string|email|unique:users',
-            'password'  => 'required|string|confirmed'
-        ]);
-        $user = new User([
-            'name'      => $request->name,
-            'email'     => $request->email,
-            'password'  => bcrypt($request->password)
-        ]);
-        $user->save();
-        return response()->json([
-            'message' => 'Successfully created user!'
-        ], 201);
+        try {
+            $request->validate([
+                'name'      => 'required|string',
+                'email'     => 'required|string|email|unique:users',
+                'password'  => 'required|string|confirmed'
+            ]);
+            $user = new User([
+                'name'      => $request->name,
+                'email'     => $request->email,
+                'password'  => bcrypt($request->password)
+            ]);
+            $user->save();
+            return response()->json([
+                'message' => 'Successfully created user!'
+            ], 201);
+        } catch (\Throwable $th) {
+            return response()->json($th, 500);
+        }
+        
     }
     public function login(Request $request)
     {
@@ -61,7 +66,8 @@ class AuthController extends Controller
         return response()->json($request->user());
     }
     public function redirectToProvider($website){
-        return Socialite::driver($website)->redirect();
+        $url = Socialite::driver($website)->redirect()->getTargetUrl();
+        return response()->json(['url'=> $url]);
     }
     public function handlerProviderCallback($website)
     {

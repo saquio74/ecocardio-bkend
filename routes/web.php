@@ -17,5 +17,4 @@ use App\Http\Controllers\Auth\AuthController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('login/{website}',                           [AuthController::class, 'redirectToProvider']);
-Route::get('login/{website}/callback',                  [AuthController::class, 'handlerProviderCallback']);
+
