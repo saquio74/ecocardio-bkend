@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class post extends Model
+class votes extends Model
 {
     use HasFactory;
-    protected $table = 'posts';
+    protected $table='votes';
     protected $primaryKey = 'id';
-    protected $fillable = ['id','title','description','user_id','img','like','dislike','created_at','updated_at'];
+    protected $fillable=['user_id','post_id','tipo','created_at','updated_at'];
 }

@@ -32,6 +32,7 @@ Route::get('postShow/{id}',                                     [PostController:
 Route::get('myPosts/{id}',                                      [PostController::class,'myPosts']);
 Route::middleware('auth:api')->post('postUpdate',               [PostController::class,'update']);
 Route::middleware('auth:api')->delete('postDelete/{id}',        [PostController::class,'destroy']);
+Route::middleware('auth:api')->put('likeDislike',               [PostController::class,'likeDislike']);
 Route::get('comentarios/{id}',                                  [ComentariosController::class,'index']);
 Route::middleware('auth:api')->post('comentarioCreate',         [ComentariosController::class,'store']);
 Route::get('comentarioShow/{id}',                               [ComentariosController::class,'show']);
