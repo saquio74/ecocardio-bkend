@@ -25,8 +25,21 @@ class PacientesController extends Controller
             'nombre'            =>  'required',
             'apellido'          =>  'required',
             'dni'               =>  'required',
-            'fecha_nacimiento'  =>  'required'
+            'tipo_dni'          =>  'required',
+            'fecha_nacimiento'  =>  'required',
+            'direccion'         =>  'required',
+            'localidad'         =>  'required',
+            'provincia'         =>  'required',
+            'telefono'          =>  'required',
+            'celular'           =>  'required',
+            'email'             =>  'required',
+            'cobertura'         =>  'required',
+            'tipo_de_af'        =>  'required',
+            'cuit'              =>  'required|unique:pacientes',
+            'n_af'              =>  'required',
+            
         ]);
+
         $carbon_fecha_nacimiento= \Carbon\Carbon::createFromFormat('Y-m-d',$request->fecha_nacimiento);
         $request->fecha_nacimiento = $carbon_fecha_nacimiento;
 
@@ -34,10 +47,15 @@ class PacientesController extends Controller
         return response()->json(['message'=>'Ingresado correctamente'],204);
     }
 
-    public function show($id)
+    public function show($dni)
     {
-        $paciente = pacientes::where('id',$paciente->id);
-        return response()->json($paciente);
+        $paciente = pacientes::where('dni','=',$dni)->first();
+        if($paciente){
+
+            return response()->json($paciente);
+        }else{
+            return response()->json(['message'=>'no existe paciente'],422);
+        }
     }
 
     public function update(Request $request)
@@ -47,13 +65,24 @@ class PacientesController extends Controller
             'nombre'            =>  'required',
             'apellido'          =>  'required',
             'dni'               =>  'required',
-            'fecha_nacimiento'  =>  'required'
+            'tipo_dni'          =>  'required',
+            'fecha_nacimiento'  =>  'required',
+            'direccion'         =>  'required',
+            'localidad'         =>  'required',
+            'provincia'         =>  'required',
+            'telefono'          =>  'required',
+            'celular'           =>  'required',
+            'email'             =>  'required',
+            'cobertura'         =>  'required',
+            'tipo_de_af'        =>  'required',
+            'cuit'              =>  'required',
+            'n_af'              =>  'required',
         ]);
         $carbon_fecha_nacimiento= \Carbon\Carbon::createFromFormat('Y-m-d',$request->fecha_nacimiento);
         $request->fecha_nacimiento = $carbon_fecha_nacimiento;
 
-        pacientes::where('id','=', $request->id)->update($request->except('id'));
-        return response()->json(['message'=>'Ingresado correctamente'],204);
+        pacientes::where('id','=', $request->id)->update($request->except('id','created_at','updated_at'));
+        return response()->json(['message'=>'actualizado correctamente'],201);
     }
 
     

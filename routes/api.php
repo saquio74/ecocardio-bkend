@@ -23,7 +23,7 @@ Route::middleware('auth:api')->get('user',                      [AuthController:
 Route::middleware('auth:api')->post('logout',                   [AuthController::class,'logout']);
 Route::middleware('auth:api')->get('pacientes',                 [PacientesController::class,'index']);
 Route::middleware('auth:api')->post('pacientesCreate',          [PacientesController::class,'store']);
-Route::middleware('auth:api')->get('pacientesShow',             [PacientesController::class,'show']);
+Route::middleware('auth:api')->get('patients/{dni}',            [PacientesController::class,'show']);
 Route::middleware('auth:api')->put('pacientesUpdate',           [PacientesController::class,'update']);
 Route::middleware('auth:api')->delete('pacientesDelete',        [PacientesController::class,'destroy']);
 Route::get('post',                                              [PostController::class,'index']);
