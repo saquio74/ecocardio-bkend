@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddLikeDislikeToPosts extends Migration
+class AddDataToUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class AddLikeDislikeToPosts extends Migration
      */
     public function up()
     {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->string('img')->after('user_id');
-            //$table->integer('dislike');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('especialidad')->nullable();
+            $table->string('mp')->nullable();
+            $table->string('mn')->nullable();
         });
     }
 
@@ -26,7 +27,7 @@ class AddLikeDislikeToPosts extends Migration
      */
     public function down()
     {
-        Schema::table('posts', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
         });
     }

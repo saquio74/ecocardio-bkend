@@ -17,8 +17,8 @@ class Post extends Migration
             $table->id();
             $table->string('title');
             $table->string('description');
-            $table->int('like');
-            $table->int('dislike');
+            $table->integer('like');
+            $table->integer('dislike');
             $table->bigInteger('user_id')->unsigned();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');

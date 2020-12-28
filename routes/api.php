@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\PacientesController;
 use App\Http\Controllers\PostController; 
 use App\Http\Controllers\ComentariosController; 
+use App\Http\Controllers\EstudioController; 
 
 
 /*
@@ -21,11 +22,17 @@ use App\Http\Controllers\ComentariosController;
 
 Route::middleware('auth:api')->get('user',                      [AuthController::class,'user']);
 Route::middleware('auth:api')->post('logout',                   [AuthController::class,'logout']);
+Route::middleware('auth:api')->put('updateUser',                [AuthController::class,'userDataModify']);
 Route::middleware('auth:api')->get('pacientes',                 [PacientesController::class,'index']);
 Route::middleware('auth:api')->post('pacientesCreate',          [PacientesController::class,'store']);
 Route::middleware('auth:api')->get('patients/{dni}',            [PacientesController::class,'show']);
 Route::middleware('auth:api')->put('pacientesUpdate',           [PacientesController::class,'update']);
 Route::middleware('auth:api')->delete('pacientesDelete',        [PacientesController::class,'destroy']);
+Route::middleware('auth:api')->get('study',                     [EstudioController::class,'index']);
+Route::middleware('auth:api')->post('studyCreate',              [EstudioController::class,'store']);
+Route::middleware('auth:api')->get('study/{id}',                [EstudioController::class,'show']);
+Route::middleware('auth:api')->put('studyUpdate',               [EstudioController::class,'update']);
+Route::middleware('auth:api')->delete('studyDelete/{id}',       [EstudioController::class,'destroy']);
 Route::get('post',                                              [PostController::class,'index']);
 Route::middleware('auth:api')->post('postCreate',               [PostController::class,'store']);
 Route::get('postShow/{id}',                                     [PostController::class,'show']);
@@ -49,6 +56,8 @@ Route::group(['middleware' => ['web']], function () {
 
 
 Route::prefix('auth')->group(function(){
-    Route::post('login',        [AuthController::class,'login']);
-    Route::post('signup',       [AuthController::class,'signup']);
+    Route::post('login',                    [AuthController::class,'login']);
+    Route::post('signup',                   [AuthController::class,'signup']);
+    Route::get('email/verify/{id}/{hash}',  [AuthController::class,'verify']);
+    Route::post('email/resend',             [AuthController::class,'resend']);
 });

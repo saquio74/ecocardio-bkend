@@ -27,23 +27,26 @@ class EstudioController extends Controller
      */
     public function store(Request $request)
     {
-        $request->valdate([
-            'paciente_id'=> 'required',
-            'user_id'=> 'required',
-            'diametros'=> 'required',
-            'funcion'=> 'required',
-            'espesor'=> 'required',
-            'motilidad'=> 'required',
-            'valvula_mitral'=> 'required',
-            'raiz_aorta'=> 'required',
-            'valvula_aortica'=> 'required',
-            'valvula_pulmonar'=> 'required',
-            'cavidades_derechas'=> 'required',
-            'vci'=> 'required',
-            'pericardio'=> 'required',
-            'masas_intracardiacas'=> 'required',
-            'patron'=> 'required',
-            'tabique_interventricular'=> 'required',
+        $request->validate([
+            'paciente_id' => 'required',
+            'user_id' => 'required',
+            'diametros' => 'required',
+            'auricula_izquierda' => 'required',
+            'cavidades_derechas' => 'required',
+            'funcion' => 'required',
+            'espesor' => 'required',
+            'motilidad' => 'required',
+            'valvula_mitral' => 'required',
+            'raiz_aorta' => 'required',
+            'valvula_aortica' => 'required',
+            'valvula_tricuspide' => 'required',
+            'valvula_pulmonar' => 'required',
+            'pericardio_masas' => 'required',
+            'vci' => 'required',
+            'tabiques' => 'required',
+            'patron' => 'required',
+            'valvulopatias' => 'required',
+            'conclusion' => 'required',
         ]);
         estudio::create($request->all());
         return response()->json(['message'=>'estudio creado correctamente'],201);
