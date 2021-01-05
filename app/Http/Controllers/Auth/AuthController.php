@@ -89,45 +89,7 @@ class AuthController extends Controller
         $url = Socialite::driver($website)->redirect()->getTargetUrl();
         return response()->json(['url'=> $url]);
     }
-    public function handlerProviderCallback($website)
-    {
-        $user = Socialite::driver($website)->stateless()->user();
-        if(!$user->token){
-            return response()->json(['message'=>'error in login']);
-        }
-        $appUser = user::where('users.email','=',$user->email)
-                        ->first();
-        if(!$appUser){
-            $newUser = user::create([
-                'name'      =>  $user->name,
-                'email'     =>  $user->email,
-                'password'  =>  Hash::make(Str::random(12))
-            ]);
-            $appUser = user::where('users.email','=',$user->email)
-                        ->first();
-            $socialAccount = LinkedSocialAccount::create([
-                'provider_name' =>  $website,
-                'provider_id'   =>  $user->id, 
-                'user_id'       =>  $appUser->id
-            ]);
-
-        }else{
-            $socialAccount = \DB::table('users')
-                        ->select('users.id','users.name','users.email','linked_social_accounts.provider_id','linked_social_accounts.provider_name')
-                        ->join('linked_social_accounts','user_id','=','users.id')
-                        ->where('users.email','=',$user->email)
-                        ->first();
-            if(!$socialAccount){
-                $socialAccount = LinkedSocialAccount::create([
-                    'provider_name' =>  $website,
-                    'provider_id'   =>  $user->id, 
-                    'user_id'       =>  $appUser->id
-                ]);
-            }
-        }
-        $token = $appUser->createToken('Access Token')->accessToken;
-        return response()->json(['access_token'=>$token]);
-    }
+    
     public function verify($id,$code){
         //dd($code);
         $user = User::where('id','=',$id)->first();
